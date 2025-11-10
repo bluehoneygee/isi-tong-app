@@ -132,3 +132,15 @@
 .h2-bold {
   @apply text-[24px] font-bold leading-[31.2px];
 }
+
+.paragraph-regular {
+  @apply text-[16px] font-normal leading-[22.4px];
+}
+
+.invert-colors {
+  @apply invert dark:invert-0;
+}
+
+.body-medium {
+  @apply text-[14px] font-medium leading-[18.2px];
+}
