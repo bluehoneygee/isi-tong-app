@@ -137,10 +137,29 @@
   @apply text-[16px] font-normal leading-[22.4px];
 }
 
+.paragraph-medium {
+  @apply text-[16px] font-medium leading-[22.4px];
+}
+
+.paragraph-semibold {
+  @apply text-[16px] font-semibold leading-[20.8px];
+}
+
 .invert-colors {
   @apply invert dark:invert-0;
 }
 
 .body-medium {
   @apply text-[14px] font-medium leading-[18.2px];
+}
+
+.primary-gradient {
+  background: linear-gradient(129deg, #ff7000 0%, #e2995f 100%);
+}
+
+.primary-text-gradient {
+  background: linear-gradient(129deg, #ff7000 0%, #e2995f 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
