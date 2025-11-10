@@ -133,6 +133,18 @@
   @apply text-[24px] font-bold leading-[31.2px];
 }
 
+.base-medium {
+  @apply text-[18px] font-medium leading-[25.2px];
+}
+
+.base-semibold {
+  @apply text-[18px] font-semibold leading-[25.2px];
+}
+
+.base-bold {
+  @apply text-[18px] font-bold leading-[140%];
+}
+
 .paragraph-regular {
   @apply text-[16px] font-normal leading-[22.4px];
 }
@@ -153,6 +165,10 @@
   @apply text-[14px] font-medium leading-[18.2px];
 }
 
+.small-medium {
+  @apply text-[12px] font-medium leading-[15.6px];
+}
+
 .primary-gradient {
   background: linear-gradient(129deg, #ff7000 0%, #e2995f 100%);
 }
@@ -162,4 +178,15 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
