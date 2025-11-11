@@ -129,6 +129,10 @@
   }
 }
 
+.h1-bold {
+  @apply text-[30px] font-bold leading-[42px] tracking-tighter;
+}
+
 .h2-bold {
   @apply text-[24px] font-bold leading-[31.2px];
 }

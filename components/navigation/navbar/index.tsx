@@ -10,7 +10,7 @@ const Navbar = () => {
       <Link href="/" className="flex items-center gap-1">
         <Image src="logo.svg" width={23} height={23} alt="isi tong logo" />
         <p className="font-grotesk h2-bold text-black dark:text-white max-sm:hidden">
-          Isi <span className="text-[#ff7000]">Tong</span>
+          Isi<span className="text-[#ff7000]">Tong</span>
         </p>
       </Link>
       <p>Global Search</p>
