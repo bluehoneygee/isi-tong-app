@@ -133,6 +133,10 @@
   @apply text-[24px] font-bold leading-[31.2px];
 }
 
+.h3-bold {
+  @apply text-[20px] font-bold leading-[26px];
+}
+
 .base-medium {
   @apply text-[18px] font-medium leading-[25.2px];
 }
@@ -189,4 +193,23 @@
 .no-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+  border-radius: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 50px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

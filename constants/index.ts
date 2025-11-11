@@ -22,7 +22,7 @@ export const sidebarLinks = [
   {
     imgURL: "/icons/tag.svg",
     route: "/tags",
-    label: "Tagar",
+    label: "Topik",
   },
   {
     imgURL: "/icons/user.svg",
@@ -32,6 +32,6 @@ export const sidebarLinks = [
   {
     imgURL: "/icons/question.svg",
     route: "/ask-question",
-    label: "Ajukan Pertanyaan",
+    label: "Buat Pertanyaan",
   },
 ];
