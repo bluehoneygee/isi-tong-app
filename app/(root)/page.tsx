@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import QuestionCard from "@/components/cards/QuestionCard";
 import HomeFilter from "@/components/filters/HomeFilter";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
@@ -15,27 +16,18 @@ const questions = [
       { _id: "1", name: "plastik kemasan" },
       { _id: "2", name: "bank sampah" },
     ],
-    author: { _id: "1", name: "Bu Rini" },
+    author: {
+      _id: "1",
+      name: "Bu Rini",
+      image:
+        "https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-174669.jpg",
+    },
     upvotes: 23,
     answers: 7,
     views: 180,
-    createdAt: new Date("2025-10-06"),
+    createdAt: new Date(),
   },
-  {
-    _id: "2",
-    title: "Sisa minyak goreng bisa dimanfaatin lagi nggak?",
-    description:
-      "Biasanya aku buang di wastafel, tapi katanya bisa nyumbat saluran air. Ada yang punya cara aman atau ide buat olah minyak jelantah?",
-    tags: [
-      { _id: "3", name: "minyak jelantah" },
-      { _id: "4", name: "tips rumah tangga" },
-    ],
-    author: { _id: "2", name: "Bu Yanti" },
-    upvotes: 35,
-    answers: 12,
-    views: 250,
-    createdAt: new Date("2025-10-05"),
-  },
+
   {
     _id: "3",
     title: "Cara bikin kompos dari sisa dapur yang gampang gimana?",
@@ -45,7 +37,12 @@ const questions = [
       { _id: "5", name: "kompos" },
       { _id: "6", name: "organik" },
     ],
-    author: { _id: "3", name: "Bu Lina" },
+    author: {
+      _id: "3",
+      name: "Bu Lina",
+      image:
+        "https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-174669.jpg",
+    },
     upvotes: 42,
     answers: 15,
     views: 310,
@@ -60,7 +57,12 @@ const questions = [
       { _id: "7", name: "plastik" },
       { _id: "8", name: "daur ulang" },
     ],
-    author: { _id: "4", name: "Bu Nia" },
+    author: {
+      _id: "4",
+      name: "Bu Nia",
+      image:
+        "https://img.freepik.com/free-vector/smiling-young-man-illustration_1308-174669.jpg",
+    },
     upvotes: 19,
     answers: 4,
     views: 120,
@@ -106,7 +108,7 @@ const HomePage = async ({ searchParams }: SearchParams) => {
       <HomeFilter />
       <div className="mt-10 w-full flex flex-col gap-6">
         {filteredQuestions.map((question) => (
-          <h1 key={question._id}>{question.title}</h1>
+          <QuestionCard key={question._id} question={question} />
         ))}
       </div>
     </>
