@@ -72,18 +72,13 @@ const questions = [
   },
 ];
 
-const test = async () => {
-  try {
-    await dbConnect();
-  } catch (error) {
-    return handleError(error);
-  }
-};
 interface SearchParams {
   searchParams: Promise<{ [key: string]: string }>;
 }
 const HomePage = async ({ searchParams }: SearchParams) => {
-  const result = await test();
+  const session = await auth();
+  console.log("Session:", session);
+
   const { query = "", filter = "" } = await searchParams;
 
   const filteredQuestions = questions.filter((question) => {

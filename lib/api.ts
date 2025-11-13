@@ -1,6 +1,7 @@
 import { IUser } from "@/database/user.model";
 import { fetchHandler } from "./handlers/fetch";
 import { IAccount } from "@/database/account.model";
+import ROUTES from "@/constants/routes";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000/api";
@@ -33,7 +34,7 @@ export const api = {
     getAll: () => fetchHandler(`${API_BASE_URL}/accounts`),
     getById: (id: string) => fetchHandler(`${API_BASE_URL}/accounts/${id}`),
     getByProvider: (providerAccountId: string) =>
-      fetchHandler(`${API_BASE_URL}accounts/provider`, {
+      fetchHandler(`${API_BASE_URL}/accounts/provider`, {
         method: "POST",
         body: JSON.stringify({ providerAccountId }),
       }),
@@ -50,6 +51,18 @@ export const api = {
     delete: (id: string) =>
       fetchHandler(`${API_BASE_URL}/accounts/${id}`, {
         method: "DELETE",
+      }),
+  },
+  auth: {
+    oAuthSignIN: ({
+      user,
+      provider,
+      providerAccountId,
+    }: SignInWithOAuthParams) =>
+      fetchHandler(`${API_BASE_URL}/auth/${ROUTES.SIGN_IN_WITH_AOUTH}`, {
+        method: "POST",
+        body: JSON.stringify({ user, provider, providerAccountId }),
+        timeout: 15000,
       }),
   },
 };
