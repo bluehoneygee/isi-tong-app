@@ -1,10 +1,10 @@
 import { getTimeStamp } from "@/lib/utils";
 import Link from "next/link";
-import React from "react";
 
 import Metric from "../Metric";
 import ROUTES from "@/constants/routes";
 import TagCard from "./TagCards";
+import { Question, Tag } from "@/types/global";
 
 interface Props {
   question: Question;
