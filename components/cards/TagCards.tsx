@@ -1,7 +1,12 @@
-import Link from "next/link";
-import { Badge } from "../ui/badge";
-import ROUTES from "@/constants/routes";
 import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+
+import ROUTES from "@/constants/routes";
+import { cn } from "@/lib/utils";
+
+import { Badge } from "../ui/badge";
+
 interface Props {
   _id: string;
   name: string;
@@ -33,17 +38,19 @@ const TagCard = ({
         <div className="flex-center space-x-2">
           <span>{name}</span>
         </div>
+
         {remove && (
           <Image
             src="/icons/close.svg"
             width={12}
             height={12}
-            alt="Close Icon"
+            alt="close icon"
             className="cursor-pointer object-contain invert-0 dark:invert"
             onClick={handleRemove}
           />
         )}
       </Badge>
+
       {showCount && (
         <p className="text-[12px] font-medium leading-[15.6px] text-[#101012] dark:text-[#DCE3F1]">
           {questions}
@@ -63,6 +70,27 @@ const TagCard = ({
       </Link>
     );
   }
+
+  return (
+    <Link href={ROUTES.TAG(_id)} className="shadow-light100_darknone">
+      <article className="background-[#f4f6f8] dark:bg-[#0f1117] border-[#f4f6f8] dark:border-[#151821] flex w-full flex-col rounded-2xl border px-8 py-10 sm:w-[260px]">
+        <div className="flex items-center justify-between gap-3">
+          <div className="bg-[#f4f6f8] dark:bg-[#212734] w-fit rounded-sm px-5 py-1.5">
+            <p className="paragraph-semibold text-[#151821] dark:text-white">
+              {name}
+            </p>
+          </div>
+        </div>
+
+        <p className="small-medium text-[#212734] dark:text-[#7b8ec8] mt-3.5">
+          <span className="body-semibold primary-text-gradient mr-2.5">
+            {questions}+
+          </span>
+          Questions
+        </p>
+      </article>
+    </Link>
+  );
 };
 
 export default TagCard;
