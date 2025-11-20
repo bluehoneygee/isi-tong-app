@@ -34,14 +34,22 @@ import type { ForwardedRef } from "react";
 
 import "@mdxeditor/editor/style.css";
 import "./dark-editor.css";
+import { cn } from "@/lib/utils";
 
 interface Props {
   value: string;
   fieldChange: (value: string) => void;
   editorRef: ForwardedRef<MDXEditorMethods> | null;
+  className?: string;
 }
 
-const Editor = ({ value, editorRef, fieldChange, ...props }: Props) => {
+const Editor = ({
+  value,
+  editorRef,
+  fieldChange,
+  className,
+  ...props
+}: Props) => {
   const { resolvedTheme } = useTheme();
 
   const theme = resolvedTheme === "dark" ? [basicDark] : [];
@@ -51,7 +59,10 @@ const Editor = ({ value, editorRef, fieldChange, ...props }: Props) => {
       key={resolvedTheme}
       markdown={value}
       ref={editorRef}
-      className="background-light800_dark200 light-border-2 markdown-editor dark-editor w-full border grid"
+      className={cn(
+        "background-light800_dark200 light-border-2 markdown-editor dark-editor w-full border grid",
+        className
+      )}
       onChange={fieldChange}
       plugins={[
         headingsPlugin(),
