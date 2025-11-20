@@ -16,8 +16,14 @@ const EditQuestion = async ({ params }: RouteParams) => {
   const { data: question, success } = await getQuestion({ questionId: id });
   if (!success) return notFound();
 
-  if (question?.author.toString() !== session?.user?.id)
+  const authorId =
+    typeof question?.author === "string"
+      ? question.author
+      : question?.author?._id;
+
+  if (!authorId || authorId.toString() !== session.user?.id) {
     redirect(ROUTES.QUESTION(id));
+  }
   return (
     <>
       <main className="mt-9">
