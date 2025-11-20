@@ -41,6 +41,7 @@ const QuestionCard = ({
           href={ROUTES.PROFILE(author._id)}
           textStyles="text-[14px] font-medium leading-[18.2px] text-[#212734] dark:text-[#DCE3F1]"
           isAuthor
+          titleStyles="max-sm:hidden"
         />
 
         <div className="flex items-center gap-3 max-sm:flex-wrap max-sm:justify-start">

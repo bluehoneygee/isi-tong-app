@@ -14,7 +14,7 @@ const AuthLayout = ({ children }: { children: ReactNode }) => {
             </p>
           </div>
           <Image
-            src="/logo.svg"
+            src="/public/logo.svg"
             alt="IsiTong Logo"
             width={50}
             height={50}
