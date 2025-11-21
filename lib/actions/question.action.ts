@@ -21,6 +21,12 @@ import {
   PaginatedSearchParams,
   Question as QuestionType,
 } from "@/types/global";
+import {
+  CreateQuestionParams,
+  EditQuestionParams,
+  GetQuestionParams,
+  IncrementViewsParams,
+} from "@/types/action";
 
 export async function createQuestion(
   params: CreateQuestionParams

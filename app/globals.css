@@ -137,6 +137,10 @@
   @apply text-[10px] font-normal leading-[13px];
 }
 
+.subtle-medium {
+  @apply text-[10px]! font-medium! leading-[13px]!;
+}
+
 .base-semibold {
   @apply text-[18px] font-semibold leading-[25.2px];
 }
