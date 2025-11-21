@@ -77,10 +77,12 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
     }
 
     setisAISubmitting(true);
+    const userAnswer = editorRef.current?.getMarkdown();
     try {
       const { success, data, error } = await api.ai.getAnswer(
         questionTitle,
-        questionContent
+        questionContent,
+        userAnswer
       );
 
       if (!success || !data) {
@@ -113,10 +115,7 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
           return;
         }
         editor.setMarkdown(formattedAnswer);
-        console.log(
-          "Editor markdown after setMarkdown:",
-          editor.getMarkdown()
-        );
+        console.log("Editor markdown after setMarkdown:", editor.getMarkdown());
       };
 
       applyMarkdown();
