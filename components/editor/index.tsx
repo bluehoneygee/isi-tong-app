@@ -30,7 +30,7 @@ import {
 } from "@mdxeditor/editor";
 import { basicDark } from "cm6-theme-basic-dark";
 import { useTheme } from "next-themes";
-import type { ForwardedRef } from "react";
+import { useEffect, type MutableRefObject } from "react";
 
 import "@mdxeditor/editor/style.css";
 import "./dark-editor.css";
@@ -38,8 +38,8 @@ import { cn } from "@/lib/utils";
 
 interface Props {
   value: string;
+  editorRef: MutableRefObject<MDXEditorMethods | null>;
   fieldChange: (value: string) => void;
-  editorRef: ForwardedRef<MDXEditorMethods> | null;
   className?: string;
 }
 
@@ -53,6 +53,16 @@ const Editor = ({
   const { resolvedTheme } = useTheme();
 
   const theme = resolvedTheme === "dark" ? [basicDark] : [];
+
+  useEffect(() => {
+    const editor = editorRef?.current;
+    if (!editor) return;
+
+    const currentValue = editor.getMarkdown();
+    if (value.trim() !== currentValue.trim()) {
+      editor.setMarkdown(value);
+    }
+  }, [value, editorRef]);
 
   return (
     <MDXEditor

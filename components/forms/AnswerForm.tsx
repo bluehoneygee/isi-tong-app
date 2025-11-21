@@ -18,17 +18,25 @@ import { MDXEditorMethods } from "@mdxeditor/editor";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { createAnswer } from "@/lib/actions/answer.action";
+import { api } from "@/lib/api";
 import { toast } from "sonner";
+import { useSession } from "next-auth/react";
 
 const Editor = dynamic(() => import("@/components/editor"), {
   // Make sure we turn SSR off
   ssr: false,
 });
 
-const AnswerForm = ({ questionId }: { questionId: string }) => {
-  const [isAnswering, startAnsweringTransition] = useTransition();
+interface Props {
+  questionId: string;
+  questionTitle: string;
+  questionContent: string;
+}
 
+const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
+  const [isAnswering, startAnsweringTransition] = useTransition();
   const [isAISubmitting, setisAISubmitting] = useState(false);
+  const session = useSession();
 
   const editorRef = useRef<MDXEditorMethods>(null);
 
@@ -49,6 +57,10 @@ const AnswerForm = ({ questionId }: { questionId: string }) => {
       if (result.success) {
         form.reset();
         toast.success("Your answer has been posted successfully");
+
+        if (editorRef.current) {
+          editorRef.current.setMarkdown("");
+        }
       } else {
         toast.error(`Error ${result.status}`, {
           description: result?.error?.message ?? "Something went wrong",
@@ -57,6 +69,69 @@ const AnswerForm = ({ questionId }: { questionId: string }) => {
     });
   };
 
+  const generateAIAnswer = async () => {
+    if (session.status !== "authenticated") {
+      return toast.error("Please log in", {
+        description: "You need to be logged in to use this feature",
+      });
+    }
+
+    setisAISubmitting(true);
+    try {
+      const { success, data, error } = await api.ai.getAnswer(
+        questionTitle,
+        questionContent
+      );
+
+      if (!success || !data) {
+        return toast.error("Error", {
+          description: error?.message || "Failed to generate answer",
+        });
+      }
+
+      const formattedAnswer = data.replace(/<br>/g, " ").toString().trim();
+      console.log("AI formattedAnswer:", formattedAnswer);
+
+      form.setValue("content", formattedAnswer, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+      console.log("Form content value:", form.getValues("content"));
+      form.trigger("content");
+
+      let attempts = 0;
+      const applyMarkdown = () => {
+        const editor = editorRef.current;
+        if (!editor) {
+          attempts += 1;
+          console.log("Editor ref not ready yet, attempt", attempts);
+          if (attempts <= 5) {
+            setTimeout(applyMarkdown, 150);
+          } else {
+            console.log("Editor ref not ready after retries");
+          }
+          return;
+        }
+        editor.setMarkdown(formattedAnswer);
+        console.log(
+          "Editor markdown after setMarkdown:",
+          editor.getMarkdown()
+        );
+      };
+
+      applyMarkdown();
+      requestAnimationFrame(applyMarkdown);
+
+      toast.success("AI answer has been generated");
+    } catch (error) {
+      toast.error("Failed to generate AI answer", {
+        description:
+          error instanceof Error ? error.message : "Something went wrong",
+      });
+    } finally {
+      setisAISubmitting(false);
+    }
+  };
   return (
     <div>
       <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
@@ -67,6 +142,8 @@ const AnswerForm = ({ questionId }: { questionId: string }) => {
         <Button
           className="bg-[#f4f6f8] dark:bg-[#151821]  border-[#dce3f1] dark:border-[#212734] gap-1.5 border rounded-md px-4 py-2.5 text-[#ff7000]"
           disabled={isAISubmitting}
+          type="button"
+          onClick={generateAIAnswer}
         >
           {isAISubmitting ? (
             <>
