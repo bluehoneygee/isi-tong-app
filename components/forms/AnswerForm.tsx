@@ -21,6 +21,7 @@ import { createAnswer } from "@/lib/actions/answer.action";
 import { api } from "@/lib/api";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const Editor = dynamic(() => import("@/components/editor"), {
   // Make sure we turn SSR off
@@ -36,7 +37,9 @@ interface Props {
 const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
   const [isAnswering, startAnsweringTransition] = useTransition();
   const [isAISubmitting, setisAISubmitting] = useState(false);
+  const [editorKey, setEditorKey] = useState(0);
   const session = useSession();
+  const router = useRouter();
 
   const editorRef = useRef<MDXEditorMethods>(null);
 
@@ -55,12 +58,32 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
       });
 
       if (result.success) {
-        form.reset();
         toast.success("Your answer has been posted successfully");
 
-        if (editorRef.current) {
-          editorRef.current.setMarkdown("");
-        }
+        form.reset({ content: "" });
+        form.setValue("content", "", {
+          shouldDirty: false,
+          shouldValidate: false,
+        });
+
+        let clearAttempts = 0;
+        const clearEditor = () => {
+          const editor = editorRef.current;
+          if (!editor) {
+            clearAttempts += 1;
+            if (clearAttempts <= 5) {
+              setTimeout(clearEditor, 150);
+            }
+            return;
+          }
+          editor.setMarkdown("");
+        };
+        clearEditor();
+        requestAnimationFrame(clearEditor);
+
+        setEditorKey((prev) => prev + 1);
+
+        router.refresh();
       } else {
         toast.error(`Error ${result.status}`, {
           description: result?.error?.message ?? "Something went wrong",
@@ -77,12 +100,10 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
     }
 
     setisAISubmitting(true);
-    const userAnswer = editorRef.current?.getMarkdown();
     try {
       const { success, data, error } = await api.ai.getAnswer(
         questionTitle,
-        questionContent,
-        userAnswer
+        questionContent
       );
 
       if (!success || !data) {
@@ -175,6 +196,7 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
               <FormItem className="flex w-full flex-col gap-3">
                 <FormControl className="mt-3.5">
                   <Editor
+                    key={editorKey}
                     value={field.value}
                     editorRef={editorRef}
                     fieldChange={field.onChange}
