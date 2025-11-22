@@ -23,7 +23,7 @@ export const getTimeStamp = (createdAt: Date) => {
   for (const unit of units) {
     const interval = Math.floor(secondsAgo / unit.seconds);
     if (interval >= 1) {
-      return `${interval} ${unit.label}${interval > 1 ? "s" : ""} lalu`;
+      return `${interval} ${unit.label}${interval > 1 ? "" : ""} lalu`;
     }
   }
   return "baru saja";
