@@ -30,7 +30,7 @@ const Page = async ({ params, searchParams }: RouteParams) => {
         <LocalSearch
           route={ROUTES.TAG(id)}
           imgSrc="/icons/search.svg"
-          placeholder="Search questions..."
+          placeholder="Cari Pertanyaan..."
           otherClasses="flex-1"
         />
       </section>

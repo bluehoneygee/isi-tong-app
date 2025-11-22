@@ -31,7 +31,7 @@ const LeftSidebar = async () => {
               <LogOut className="size-5 text-black dark:text-white" />
               <span className="max-lg:hidden text-[#151821] dark:text-white">
                 {" "}
-                Logout{" "}
+                Keluar{" "}
               </span>
             </Button>
           </form>

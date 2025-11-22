@@ -67,12 +67,12 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
       } else if (tagInput.length > 15) {
         form.setError("tags", {
           type: "manual",
-          message: "Tag should be less than 15 characters",
+          message: "Topik harus kurang dari 15 karakter huruf",
         });
       } else if (field.value.includes(tagInput)) {
         form.setError("tags", {
           type: "manual",
-          message: "Tag already exists",
+          message: "Topik sudah digunakan",
         });
       }
     }
@@ -86,7 +86,7 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
     if (newTags.length === 0) {
       form.setError("tags", {
         type: "manual",
-        message: "Tags are required",
+        message: "Minimal masukkan 1 topik ",
       });
     }
   };
@@ -106,7 +106,7 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
           if (result.data) router.push(ROUTES.QUESTION(result.data._id));
         } else {
           toast.error(`Error ${result.status}`, {
-            description: result?.error?.message ?? "Something went wrong",
+            description: result?.error?.message ?? "Terjadi kesalahan",
           });
         }
         return;
@@ -114,11 +114,11 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
 
       const result = await createQuestion(data);
       if (result.success) {
-        toast.success("Question created successfully");
+        toast.success("Pertanyaan berhasil dibuat");
         if (result.data) router.push(ROUTES.QUESTION(result.data._id));
       } else {
         toast.error(`Error ${result.status}`, {
-          description: result?.error?.message ?? "Something went wrong",
+          description: result?.error?.message ?? "Terjadi Kesalahan",
         });
       }
     });
@@ -135,7 +135,7 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
           render={({ field }) => (
             <FormItem className="flex w-full flex-col">
               <FormLabel className="paragraph-semibold text-[#212734] dark:text-[#f4f6f8]">
-                Question Title<span className="text-[#ff7000]">*</span>
+                Judul Pertanyaan<span className="text-[#ff7000]">*</span>
               </FormLabel>
               <FormControl>
                 <Input
@@ -145,8 +145,7 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
               </FormControl>
 
               <FormDescription className="body-regular text-[#7b8ec8] mt-2.5">
-                Be spesific and imagine you are asking a question to another
-                person
+                Jelaskan secara spesifik
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -159,7 +158,7 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
           render={({ field }) => (
             <FormItem className="flex w-full flex-col">
               <FormLabel className="paragraph-semibold text-[#212734] dark:text-[#f4f6f8]">
-                Detail explanation of your problem
+                Detail pertanyaan
                 <span className="text-[#ff7000]">*</span>
               </FormLabel>
               <FormControl>
@@ -171,8 +170,7 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
               </FormControl>
 
               <FormDescription className="body-regular text-[#7b8ec8] mt-2.5">
-                Introduce the problem and expand on what you have put in the
-                title
+                Jelaskan masalah secara lengkap dari judul yang telah ditulis
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -185,12 +183,12 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
           render={({ field }) => (
             <FormItem className="flex w-full flex-col gap-3">
               <FormLabel className="paragraph-semibold text-[#212734] dark:text-[#f4f6f8]">
-                Tags<span className="text-[#ff7000]">*</span>
+                Topik<span className="text-[#ff7000]">*</span>
               </FormLabel>
               <div>
                 <Input
                   onKeyDown={(e) => handleInputKeyDown(e, field)}
-                  placeholder="Add tags..."
+                  placeholder="Tambahkan topik..."
                   className="paragraph-regular bg-[#dce3f1] dark:bg-[#151821] text-[#151821] dark:text-[#dce3f1] border-[#dce3f1] dark:border-[#212734] min-h-14 border"
                 />
                 {field.value.length > 0 && (
@@ -211,8 +209,7 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
               </div>
 
               <FormDescription className="body-regular text-[#7b8ec8] mt-2.5">
-                Add up to 3 tags to describe what your question is about. You
-                need to press enter to add a tag
+                Tambahkan hingga 3 topik. Tekan Enter untuk menambah topik
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -228,10 +225,10 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
             {isPending ? (
               <>
                 <ReloadIcon className="mr-2  size-4 animate-spin"></ReloadIcon>
-                <span>Submitting</span>
+                <span>Mengirim...</span>
               </>
             ) : (
-              <>{isEdit ? "Edit" : "Ask a Question"}</>
+              <>{isEdit ? "Simpan Perubahan" : "Buat Pertanyaan"}</>
             )}
           </Button>
         </div>

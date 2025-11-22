@@ -50,14 +50,12 @@ const AuthForm = <T extends FieldValues>({
 
     if (result?.success) {
       toast.success(
-        formType === "SIGN_IN"
-          ? "Signed in successfully"
-          : "Signed up successfully"
+        formType === "SIGN_IN" ? "Berhasil masuk" : "Berhasil membuat akun"
       );
       router.push(ROUTES.HOME);
     } else {
       toast.error("Request failed", {
-        description: result?.error?.message ?? "Something went wrong",
+        description: result?.error?.message ?? "Terjadi kesalahan",
       });
     }
   };
@@ -79,7 +77,7 @@ const AuthForm = <T extends FieldValues>({
               <FormItem className="flex w-full flex-col gap-2.5">
                 <FormLabel className="paragraph-medium text-[#212734] dark:text-[#dce3f1]">
                   {field.name === "email"
-                    ? "Email Address"
+                    ? "Alamat Email"
                     : field.name.charAt(0).toUpperCase() + field.name.slice(1)}
                 </FormLabel>
                 <FormControl>
@@ -108,22 +106,22 @@ const AuthForm = <T extends FieldValues>({
         </Button>
         {formType === "SIGN_IN" ? (
           <p>
-            Don't have an account?{" "}
+            Belum punya akun?{" "}
             <Link
               href={ROUTES.SIGN_UP}
               className="paragraph-semibold primary-text-gradient"
             >
-              Sign up
+              Daftar
             </Link>
           </p>
         ) : (
           <p>
-            Already have an account?{" "}
+            Sudah punya akun?{" "}
             <Link
               href={ROUTES.SIGN_IN}
               className="paragraph-semibold primary-text-gradient"
             >
-              Sign in
+              Masuk
             </Link>
           </p>
         )}

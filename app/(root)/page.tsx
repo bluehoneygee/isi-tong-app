@@ -38,7 +38,7 @@ const HomePage = async ({ searchParams }: SearchParams) => {
         <LocalSearch
           route="/"
           imgSrc="/icons/search.svg"
-          placeholder="Search questions..."
+          placeholder="Cari pertanyaan..."
           otherClasses="flex-1"
         />
       </section>

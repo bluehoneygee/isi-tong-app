@@ -11,22 +11,22 @@ export const getTimeStamp = (createdAt: Date) => {
   const secondsAgo = Math.floor((now.getTime() - date.getTime()) / 1000);
 
   const units = [
-    { label: "year", seconds: 31536000 },
-    { label: "month", seconds: 2592000 },
-    { label: "week", seconds: 604800 },
-    { label: "day", seconds: 86400 },
-    { label: "hour", seconds: 3600 },
-    { label: "minute", seconds: 60 },
-    { label: "second", seconds: 1 },
+    { label: "tahun", seconds: 31536000 },
+    { label: "bulan", seconds: 2592000 },
+    { label: "minggu", seconds: 604800 },
+    { label: "hari", seconds: 86400 },
+    { label: "jam", seconds: 3600 },
+    { label: "menit", seconds: 60 },
+    { label: "detik", seconds: 1 },
   ];
 
   for (const unit of units) {
     const interval = Math.floor(secondsAgo / unit.seconds);
     if (interval >= 1) {
-      return `${interval} ${unit.label}${interval > 1 ? "s" : ""} ago`;
+      return `${interval} ${unit.label}${interval > 1 ? "s" : ""} lalu`;
     }
   }
-  return "just now";
+  return "baru saja";
 };
 
 export const formatNumber = (number: number) => {

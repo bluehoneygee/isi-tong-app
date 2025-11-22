@@ -60,11 +60,15 @@ const Votes = ({
 
       const successMessage =
         voteType === "upvote"
-          ? `Upvote ${!hasUpvoted ? "added" : "removed"} successfully`
-          : `Downvote ${!hasDownvoted ? "added" : "removed"} successfully`;
+          ? `Upvote ${
+              !hasUpvoted ? "berhasil ditambahkan" : "berhasil dihapus"
+            }`
+          : `Downvote ${
+              !hasDownvoted ? "berhasil ditambahkan" : "berhasil dihapus"
+            }`;
 
       toast.success(`${successMessage}`, {
-        description: "Your vote has been recorded",
+        description: "Vote kamu berhasil dicatatque",
       });
     } catch (error) {
       toast.error("Failed to vote", {

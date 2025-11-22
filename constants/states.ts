@@ -1,55 +1,55 @@
 import ROUTES from "./routes";
 
 export const DEFAULT_EMPTY = {
-  title: "No Data Found",
+  title: "Data Tidak Ditemukan",
   message:
-    "Looks like the database is taking a nap. Wake it up with some new entries.",
+    "Sepertinya database sedang kosong. Tambahkan data baru untuk memulainya.",
   button: {
-    text: "Add Data",
+    text: "Tambah Data",
     href: ROUTES.HOME,
   },
 };
 
 export const DEFAULT_ERROR = {
-  title: "Something Went Wrong",
-  message: "Even our code can have a bad day. Give it another shot.",
+  title: "Terjadi Kesalahan",
+  message: "Ups, sepertinya ada masalah pada sistem. Coba ulangi kembali ya.",
   button: {
-    text: "Retry Request",
+    text: "Coba Lagi",
     href: ROUTES.HOME,
   },
 };
 
 export const EMPTY_QUESTION = {
-  title: "Ahh, No Questions Yet!",
+  title: "Belum Ada Pertanyaan",
   message:
-    "The question board is empty. Maybe it’s waiting for your brilliant question to get things rolling",
+    "Papan pertanyaan masih kosong. Mungkin sedang menunggu pertanyaan cemerlang darimu!",
   button: {
-    text: "Ask a Question",
+    text: "Buat Pertanyaan",
     href: ROUTES.ASK_QUESTION,
   },
 };
 
 export const EMPTY_TAGS = {
-  title: "No Tags Found",
-  message: "The tag cloud is empty. Add some keywords to make it rain.",
+  title: "Topik Tidak Ditemukan",
+  message:
+    "Belum ada topik yang dibuat. Tambahkan beberapa kata kunci untuk memulainya.",
   button: {
-    text: "Create Tag",
+    text: "Buat Topik",
     href: ROUTES.TAGS,
   },
 };
 
 export const EMPTY_COLLECTIONS = {
-  title: "Collections Are Empty",
+  title: "Koleksi Masih Kosong",
   message:
-    "Looks like you haven’t created any collections yet. Start curating something extraordinary today.",
+    "Kamu belum membuat koleksi apa pun. Mulai kumpulkan hal-hal menarikmu di sini.",
   button: {
-    text: "Save to Collection",
+    text: "Buat Koleksi",
     href: ROUTES.COLLECTION,
   },
 };
 
 export const EMPTY_ANSWERS = {
-  title: "No Answers Found",
-  message:
-    "The answer board is empty. Make it rain with your brilliant answer.",
+  title: "Belum Ada Jawaban",
+  message: "Papan jawaban masih kosong. Yuk berikan jawaban terbaikmu!",
 };

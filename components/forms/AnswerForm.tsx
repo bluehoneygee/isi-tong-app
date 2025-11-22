@@ -58,7 +58,7 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
       });
 
       if (result.success) {
-        toast.success("Your answer has been posted successfully");
+        toast.success("Jawaban kamu berhasil dikirim");
 
         form.reset({ content: "" });
         form.setValue("content", "", {
@@ -86,7 +86,7 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
         router.refresh();
       } else {
         toast.error(`Error ${result.status}`, {
-          description: result?.error?.message ?? "Something went wrong",
+          description: result?.error?.message ?? "Terjadi kesalahan",
         });
       }
     });
@@ -94,8 +94,8 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
 
   const generateAIAnswer = async () => {
     if (session.status !== "authenticated") {
-      return toast.error("Please log in", {
-        description: "You need to be logged in to use this feature",
+      return toast.error("Silahkan login", {
+        description: "Kamu harus login untuk menggunakan fitur ini",
       });
     }
 
@@ -108,7 +108,7 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
 
       if (!success || !data) {
         return toast.error("Error", {
-          description: error?.message || "Failed to generate answer",
+          description: error?.message || "Gagal membuat jawaban AI",
         });
       }
 
@@ -142,11 +142,11 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
       applyMarkdown();
       requestAnimationFrame(applyMarkdown);
 
-      toast.success("AI answer has been generated");
+      toast.success("Jawaban AI berhasil dibuat");
     } catch (error) {
-      toast.error("Failed to generate AI answer", {
+      toast.error("Gagal membuat jawaban AI", {
         description:
-          error instanceof Error ? error.message : "Something went wrong",
+          error instanceof Error ? error.message : "Terjadi kesalahan",
       });
     } finally {
       setisAISubmitting(false);
@@ -157,7 +157,7 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
       <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
         <h4 className="paragraph-semibold text-[#212734] dark:text-[#f4f6f8]">
           {" "}
-          Write your answer here
+          Tulis jawaban kamu di sini
         </h4>
         <Button
           className="bg-[#f4f6f8] dark:bg-[#151821]  border-[#dce3f1] dark:border-[#212734] gap-1.5 border rounded-md px-4 py-2.5 text-[#ff7000]"
@@ -168,7 +168,7 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
           {isAISubmitting ? (
             <>
               <ReloadIcon className="mr-2 size-4 animate-spin" />
-              Generating...
+              Memproses...
             </>
           ) : (
             <>
@@ -179,7 +179,7 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
                 height={12}
                 className="object-contain"
               />{" "}
-              Generate AI Answer
+              Generate Jawaban AI
             </>
           )}
         </Button>
@@ -215,7 +215,7 @@ const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
                   Posting...
                 </>
               ) : (
-                "Post Answer"
+                "Kirim Jawaban"
               )}
             </Button>
           </div>

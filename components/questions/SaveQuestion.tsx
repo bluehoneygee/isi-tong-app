@@ -34,7 +34,7 @@ const SaveQuestion = ({
 
       if (!success) throw new Error(error?.message || "an error occured");
       toast.success(
-        `Question ${data?.saved ? "saved" : "unsaved"} successfully `
+        `Bookmark ${data?.saved ? "berhasil ditambahkan" : "berhasil dihapus"}`
       );
     } catch (error) {
       toast.error("Error", {
