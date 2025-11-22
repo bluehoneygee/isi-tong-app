@@ -53,3 +53,8 @@ export const EMPTY_ANSWERS = {
   title: "Belum Ada Jawaban",
   message: "Papan jawaban masih kosong. Yuk berikan jawaban terbaikmu!",
 };
+
+export const EMPTY_USERS = {
+  title: "Tidak Ada Pengguna",
+  message: "Kamu sendirian di sini. Pengguna lain akan segera hadir!",
+};
