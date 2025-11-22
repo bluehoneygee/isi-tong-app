@@ -6,7 +6,7 @@ import UserAvatar from "../ui/UserAvatar";
 interface User {
   _id: string;
   name: string;
-  image: string;
+  image?: string;
   username: string;
 }
 const UserCard = ({ _id, name, image, username }: User) => (
