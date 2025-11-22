@@ -1,6 +1,7 @@
 import UserCard from "@/components/cards/UserCard";
 import DataRenderer from "@/components/DataRenderer";
 import CommonFilter from "@/components/filters/CommonFilter";
+import Pagination from "@/components/Pagination";
 import LocalSearch from "@/components/search/LocalSearch";
 import { UserFilters } from "@/constants/filter";
 import ROUTES from "@/constants/routes";
@@ -12,12 +13,12 @@ const Community = async ({ searchParams }: RouteParams) => {
   const { page, pageSize, query, filter } = await searchParams;
   const { success, data, error } = await getUsers({
     page: Number(page) || 1,
-    pageSize: Number(pageSize) || 10,
+    pageSize: Number(pageSize) || 1,
     query,
     filter,
   });
 
-  const { users } = data || {};
+  const { users, isNext } = data || {};
   return (
     <div>
       <h1 className="h1-bold ">Semua Pengguna</h1>
@@ -47,6 +48,7 @@ const Community = async ({ searchParams }: RouteParams) => {
           </div>
         )}
       />
+      <Pagination page={page} isNext={isNext || false} />
     </div>
   );
 };
