@@ -7,21 +7,11 @@ import DataRenderer from "../DataRenderer";
 import { title } from "process";
 import { getTopTags } from "@/lib/actions/tag.action";
 
-const popularTags = [
-  { _id: "1", name: "sampah rumah tangga", questions: 130 },
-  { _id: "2", name: "plastik kemasan", questions: 110 },
-  { _id: "3", name: "bank sampah", questions: 95 },
-  { _id: "4", name: "kompos", questions: 85 },
-  { _id: "5", name: "tips hemat", questions: 70 },
-];
-
 const RightSidebar = async () => {
-  const { success, data: hotQuestions, error } = await getHotQuestions();
-  const {
-    success: tagSuccess,
-    data: tags,
-    error: tagError,
-  } = await getTopTags();
+  const [
+    { success, data: hotQuestions, error },
+    { success: tagSuccess, data: tags, error: tagError },
+  ] = await Promise.all([getHotQuestions(), getTopTags()]);
   return (
     <section className="pt-30 custom-scrollbar bg-white dark:bg-[#0f1117] border-[#f4f6f8] dark:border-[#151821] sticky right-0 top-0 flex h-screen w-[350px] flex-col gap-6 overflow-y-auto border-l p-6 shadow-[-10px_10px_20px_0px_rgba(218_213_213_0.1)] dark:shadow-none max-xl:hidden">
       <div>
