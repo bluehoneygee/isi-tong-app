@@ -1,5 +1,18 @@
 "use server";
 
+import mongoose, { ClientSession } from "mongoose";
+import { revalidatePath } from "next/cache";
+
+import ROUTES from "@/constants/routes";
+import { Answer, Question, Vote } from "@/database";
+
+import action from "../handlers/action";
+import handleError from "../handlers/error";
+import {
+  CreateVoteSchema,
+  HasVotedSchema,
+  UpdateVoteCountSchema,
+} from "../validations";
 import {
   CreateVoteParams,
   HasVotedParams,
@@ -7,15 +20,6 @@ import {
   UpdateVoteCountParams,
 } from "@/types/action";
 import { ActionResponse, ErrorResponse } from "@/types/global";
-import action from "../handlers/action";
-import {
-  CreateVoteSchema,
-  HasVotedSchema,
-  UpdateVoteCountSchema,
-} from "../validations";
-import handleError from "../handlers/error";
-import mongoose, { ClientSession } from "mongoose";
-import { Answer, Question, Vote } from "@/database";
 
 export async function updateVoteCount(
   params: UpdateVoteCountParams,
@@ -33,7 +37,6 @@ export async function updateVoteCount(
   const { targetId, targetType, voteType, change } = validationResult.params!;
 
   const Model = targetType === "question" ? Question : Answer;
-
   const voteField = voteType === "upvote" ? "upvotes" : "downvotes";
 
   try {
@@ -68,7 +71,6 @@ export async function createVote(
   }
 
   const { targetId, targetType, voteType } = validationResult.params!;
-
   const userId = validationResult.session?.user?.id;
 
   if (!userId) handleError(new Error("Unauthorized")) as ErrorResponse;
@@ -85,27 +87,39 @@ export async function createVote(
 
     if (existingVote) {
       if (existingVote.voteType === voteType) {
+        // If the user has already voted with the same voteType, remove the vote
         await Vote.deleteOne({ _id: existingVote._id }).session(session);
         await updateVoteCount(
           { targetId, targetType, voteType, change: -1 },
           session
         );
       } else {
+        // If the user has already voted with a different voteType, update the vote
         await Vote.findByIdAndUpdate(
           existingVote._id,
           { voteType },
           { new: true, session }
         );
-
         await updateVoteCount(
           { targetId, targetType, voteType, change: 1 },
           session
         );
       }
     } else {
-      await Vote.create([{ targetId, targetType, voteType, change: 1 }], {
-        session,
-      });
+      // If the user has not voted yet, create a new vote
+      await Vote.create(
+        [
+          {
+            author: userId,
+            actionId: targetId,
+            actionType: targetType,
+            voteType,
+          },
+        ],
+        {
+          session,
+        }
+      );
       await updateVoteCount(
         { targetId, targetType, voteType, change: 1 },
         session
@@ -114,6 +128,9 @@ export async function createVote(
 
     await session.commitTransaction();
     session.endSession();
+
+    revalidatePath(ROUTES.QUESTION(targetId));
+
     return { success: true };
   } catch (error) {
     await session.abortTransaction();
@@ -137,9 +154,10 @@ export async function hasVoted(
 
   const { targetId, targetType } = validationResult.params!;
   const userId = validationResult.session?.user?.id;
+
   try {
     const vote = await Vote.findOne({
-      authorId: userId,
+      author: userId,
       actionId: targetId,
       actionType: targetType,
     });
