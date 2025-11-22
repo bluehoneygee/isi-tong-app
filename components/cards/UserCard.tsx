@@ -2,8 +2,13 @@ import Link from "next/link";
 
 import ROUTES from "@/constants/routes";
 import UserAvatar from "../ui/UserAvatar";
-import { User } from "next-auth";
 
+interface User {
+  _id: string;
+  name: string;
+  image: string;
+  username: string;
+}
 const UserCard = ({ _id, name, image, username }: User) => (
   <div className="shadow-light-100 dark:shadow-none w-full xs:w-[230px]">
     <article className="bg-white dark:bg-[#0f1117] border-[#f4f6f8] dark:border-[#151821] flex w-full flex-col items-center justify-center rounded-2xl border p-8">
@@ -12,7 +17,7 @@ const UserCard = ({ _id, name, image, username }: User) => (
         name={name}
         imageUrl={image}
         className="size-[100px] rounded-full object-cover"
-        fallbackClassName="text-3xl tracking-widest"
+        fallbackClassname="text-3xl tracking-widest"
       />
 
       <Link href={ROUTES.PROFILE(_id)}>
