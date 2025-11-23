@@ -1,7 +1,11 @@
 import { auth } from "@/auth";
 import ProfileLink from "@/components/user/ProfileLink";
 
-import { getUser, getUserQuestions } from "@/lib/actions/user.action";
+import {
+  getUser,
+  getUserAnswers,
+  getUserQuestions,
+} from "@/lib/actions/user.action";
 import { notFound } from "next/navigation";
 import dayjs from "dayjs";
 import { Button } from "@/components/ui/button";
@@ -12,9 +16,10 @@ import Stats from "@/components/user/Stats";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import page from "../../page";
 import DataRenderer from "@/components/DataRenderer";
-import { EMPTY_QUESTION } from "@/constants/states";
+import { EMPTY_ANSWERS, EMPTY_QUESTION } from "@/constants/states";
 import QuestionCard from "@/components/cards/QuestionCard";
 import Pagination from "@/components/Pagination";
+import AnswerCard from "@/components/cards/AnswerCard";
 
 const Profile = async ({ params, searchParams }: RouteParams) => {
   const { id } = await params;
@@ -35,6 +40,7 @@ const Profile = async ({ params, searchParams }: RouteParams) => {
     );
 
   const { user, totalQuestions, totalAnswers } = data!;
+
   const {
     success: userQuestionsSuccess,
     data: userQuestions,
@@ -45,7 +51,18 @@ const Profile = async ({ params, searchParams }: RouteParams) => {
     pageSize: Number(pageSize) || 1,
   });
 
+  const {
+    success: userAnswersSuccess,
+    data: userAnswers,
+    error: userAnswersError,
+  } = await getUserAnswers({
+    userId: id,
+    page: Number(page) || 1,
+    pageSize: Number(pageSize) || 1,
+  });
+
   const { questions, isNext: hasMoreQuestions } = userQuestions!;
+  const { answers, isNext: hasMoreAnswers } = userAnswers!;
 
   const { _id, name, image, portfolio, location, createdAt, username, bio } =
     user;
@@ -127,7 +144,7 @@ const Profile = async ({ params, searchParams }: RouteParams) => {
               empty={EMPTY_QUESTION}
               success={userQuestionsSuccess}
               error={userQuestionsError}
-              render={(hotQuestions) => (
+              render={(questions) => (
                 <div className="flex w-full flex-col gap-6">
                   {questions.map((question) => (
                     <QuestionCard key={question._id} question={question} />
@@ -137,8 +154,28 @@ const Profile = async ({ params, searchParams }: RouteParams) => {
             />
             <Pagination page={page} isNext={hasMoreQuestions} />
           </TabsContent>
+
           <TabsContent value="answers" className="flex w-full flex-col gap-6">
-            List of Answers
+            <DataRenderer
+              data={answers}
+              empty={EMPTY_ANSWERS}
+              success={userAnswersSuccess}
+              error={userAnswersError}
+              render={(answers) => (
+                <div className="flex w-full flex-col gap-6">
+                  {answers.map((answer) => (
+                    <AnswerCard
+                      showReadMore
+                      key={answer._id}
+                      {...answer}
+                      content={answer.content.slice(0, 27)}
+                      containerClasses="bg-[#FFFFFF] dark:bg-[#0F1117] shadow-[0_12px_20px_0_rgba(184,184,184,0.03),0_6px_12px_0_rgba(184,184,184,0.02),0_2px_4px_0_rgba(184,184,184,0.03)] dark:shadow-[0_2px_10px_0_rgba(46,52,56,0.10)] rounded-[10px] px-7 py-9 sm:px-11 "
+                    />
+                  ))}
+                </div>
+              )}
+            />
+            <Pagination page={page} isNext={hasMoreAnswers || false} />
           </TabsContent>
         </Tabs>
         <div className="flex w-full min-w-[250px] flex-1 flex-col max-lg:hidden">
