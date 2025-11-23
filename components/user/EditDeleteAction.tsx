@@ -14,6 +14,7 @@ import {
 import Image from "next/image";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { deleteQuestion } from "@/lib/actions/question.action";
 
 interface Props {
   type: string;
@@ -24,9 +25,9 @@ const EditDeleteAction = ({ type, itemId }: Props) => {
   const handleEdit = () => {
     router.push(`/questions/${itemId}/edit`);
   };
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (type === "Question") {
-      //handle api delete question
+      await deleteQuestion({ questionId: itemId });
       toast.success("Pertanyaan berhasil dihapus"),
         {
           description: "Pertanyaan kamu telah dihapus secara permanen",
