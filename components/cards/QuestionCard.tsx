@@ -5,18 +5,21 @@ import Metric from "../Metric";
 import ROUTES from "@/constants/routes";
 import TagCard from "./TagCards";
 import { Question, Tag } from "@/types/global";
+import EditDeleteAction from "../user/EditDeleteAction";
 
 interface Props {
   question: Question;
+  showActionBtns?: boolean;
 }
 
 const QuestionCard = ({
   question: { _id, title, tags, author, createdAt, upvotes, answers, views },
+  showActionBtns = false,
 }: Props) => {
   return (
     <div className=" bg-[#FFFFFF] dark:bg-[#0F1117] shadow-[0_12px_20px_0_rgba(184,184,184,0.03),0_6px_12px_0_rgba(184,184,184,0.02),0_2px_4px_0_rgba(184,184,184,0.03)] dark:shadow-[0_2px_10px_0_rgba(46,52,56,0.10)] p-9 sm:px-11 rounded-[10px]">
-      <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
-        <div>
+      <div className="flex flex-col-reverse items-center justify-between gap-5 sm:flex-row">
+        <div className="flex-1">
           <span className="text-[10px] font-normal leading-[13px] text-[#212734] dark:text-[#DCE3F1] line-clamp-1 flex sm:hidden">
             {getTimeStamp(createdAt)}
           </span>
@@ -26,6 +29,7 @@ const QuestionCard = ({
             </h3>
           </Link>
         </div>
+        {showActionBtns && <EditDeleteAction type="Question" itemId={_id} />}
       </div>
       <div className="mt-3.5 flex w-full flex-wrap gap-2">
         {tags.map((tag: Tag) => (
