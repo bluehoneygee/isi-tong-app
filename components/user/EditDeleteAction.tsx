@@ -15,6 +15,7 @@ import Image from "next/image";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { deleteQuestion } from "@/lib/actions/question.action";
+import { deleteAnswer } from "@/lib/actions/answer.action";
 
 interface Props {
   type: string;
@@ -33,7 +34,7 @@ const EditDeleteAction = ({ type, itemId }: Props) => {
           description: "Pertanyaan kamu telah dihapus secara permanen",
         };
     } else if (type === "Answer") {
-      //handle api delete answer
+      await deleteAnswer({ answerId: itemId });
       toast.success("Jawaban berhasil dihapus"),
         {
           description: "Jawaban kamu telah dihapus secara permanen",
@@ -64,7 +65,7 @@ const EditDeleteAction = ({ type, itemId }: Props) => {
             </AlertDialogTitle>
             <AlertDialogDescription>
               Tindakan ini tidak dapat dibatalkan. Ini akan menghapus
-              {type === "Question" ? "pertanyaan" : "jawaban"} kamu secara
+              {type === "Question" ? " pertanyaan" : " jawaban"} kamu secara
               permanen dari server kami.
             </AlertDialogDescription>
           </AlertDialogHeader>
