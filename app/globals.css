@@ -333,3 +333,10 @@ code {
   padding-bottom: 140px;
   display: block;
 }
+
+.tab {
+  @apply min-h-full dark:bg-[#212734] bg-[#f4f6f8] text-[#7b8ec8]
+    dark:data-[state=active]:bg-[#151821]
+    data-[state=active]:bg-[#fff1e6]
+    data-[state=active]:text-[#ff7000];
+}
