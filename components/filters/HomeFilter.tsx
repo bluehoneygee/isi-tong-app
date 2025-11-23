@@ -6,12 +6,10 @@ import { cn } from "@/lib/utils";
 import { formUrlQuery, removeKeysFromUrlQuery } from "@/lib/url";
 
 const filters = [
-  { name: "kompos", value: "kompos" },
-  { name: "plastik", value: "plastik" },
-  //   { name: "Newest", value: "newest" },
-  //   { name: "Popular", value: "popular" },
-  //   { name: "Unanswered", value: "unanswered" },
-  //   { name: "Recommended", value: "recommended" },
+  { name: "Newest", value: "newest" },
+  { name: "Popular", value: "popular" },
+  { name: "Unanswered", value: "unanswered" },
+  { name: "Recommended", value: "recommended" },
 ];
 
 const HomeFilter = () => {
