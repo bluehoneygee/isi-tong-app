@@ -6,6 +6,11 @@ import { openai } from "@ai-sdk/openai";
 import { generateText } from "ai";
 import { NextResponse } from "next/server";
 
+// Allow longer execution for AI calls on serverless providers
+export const maxDuration = 10; // seconds
+// Run on edge to reduce latency
+export const runtime = "edge";
+
 export async function POST(req: Request) {
   const { question, content, userAnswer } = await req.json();
 

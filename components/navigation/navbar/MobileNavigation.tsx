@@ -33,7 +33,7 @@ const MobileNavigation = async () => {
       >
         <SheetTitle className="hidden">Navigation</SheetTitle>
         <Link href="/" className="flex items-center gap-1 ">
-          <Image src="/logo.svg" width={23} height={23} alt="Logo IsiTong" />
+          <Image src="/logo.svg" width={40} height={40} alt="Logo IsiTong" />
           <p className="font-grotesk h2-bold text-black dark:text-white ">
             Isi <span className="text-[#ff7000]">Tong</span>
           </p>
