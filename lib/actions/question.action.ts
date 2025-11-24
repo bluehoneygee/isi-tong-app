@@ -117,7 +117,7 @@ export async function createQuestion(
 
 export async function editQuestion(
   params: EditQuestionParams
-): Promise<ActionResponse<IQuestionDoc>> {
+): Promise<ActionResponse<QuestionType>> {
   const validationResult = await action({
     params,
     schema: EditQuestionSchema,
@@ -212,7 +212,10 @@ export async function editQuestion(
     await question.save({ session });
     await session.commitTransaction();
 
-    return { success: true, data: JSON.parse(JSON.stringify(question)) };
+    return {
+      success: true,
+      data: JSON.parse(JSON.stringify(question)) as QuestionType,
+    };
   } catch (error) {
     await session.abortTransaction();
     return handleError(error) as ErrorResponse;
