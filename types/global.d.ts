@@ -106,3 +106,9 @@ interface BankSampah {
   status_kegiatan?: string;
   keterangan?: string;
 }
+
+interface GlobalSearchedItem {
+  id: string;
+  type: "question" | "answer" | "user" | "tag";
+  title: string;
+}

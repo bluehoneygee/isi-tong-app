@@ -130,3 +130,8 @@ interface BankSampahFilterParams {
   page: number;
   pageSize: number;
 }
+
+interface GlobalSearchParams {
+  query: string;
+  type: string | null;
+}
