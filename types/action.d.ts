@@ -123,3 +123,10 @@ interface RecommendationParams {
   skip: number;
   limit: number;
 }
+
+interface BankSampahFilterParams {
+  query: string;
+  filter: string;
+  page: number;
+  pageSize: number;
+}

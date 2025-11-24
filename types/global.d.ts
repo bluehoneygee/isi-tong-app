@@ -94,3 +94,15 @@ interface Badges {
   SILVER: number;
   BRONZE: number;
 }
+
+interface BankSampah {
+  periode_data?: string;
+  wilayah?: string;
+  kecamatan?: string;
+  kelurahan?: string;
+  alamat?: string;
+  nama_bank_sampah?: string;
+  kegiatan?: string;
+  status_kegiatan?: string;
+  keterangan?: string;
+}
