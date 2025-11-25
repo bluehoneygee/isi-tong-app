@@ -13,74 +13,45 @@
 2. ⚙️ [Tech Stack](#tech-stack)
 3. 🔋 [Features](#features)
 4. 🤸 [Quick Start](#quick-start)
+5. 🌐 [Environment](#environment)
 
 ## <a name="introduction">🤖 Introduction</a>
 
-IsiTong is a community Q&A platform for waste management, with AI-generated answers, gamification, recommendations, and a directory of Jakarta waste banks (for now, more cities coming). Built on Next.js (SSG, ISR, SSR, PPR, Server Actions, Caching, Revalidation) for a production-ready experience.
+IsiTong is a community Q&A platform for waste management with AI-generated answers,gamification, recommendations, and a Jakarta waste-bank directory sourced from Satu Data Jakarta. Built on Next.js 16 App Router (SSG, ISR, SSR, PPR, Server Actions, caching, revalidation) for a production-ready experience. Auth runs on NextAuth/Auth.js (credentials + Google + GitHub), MongoDB stores the data, and Tailwind + shadcn/ui keep the UI consistent.
 
-Tech stack: MongoDB for data, NextAuth/Auth.js for authentication (Email/Password, Google), Tailwind + ShadCN UI for the interface. Users can ask and answer questions, request AI help, vote, bookmark, organize tags, join communities, earn badges/rewards, and browse waste bank listings.
+Users can ask and answer questions, request AI help, vote, bookmark, organize tags, join communities, and browse verified waste-bank listings. The editor supports MDX with light/dark modes, and OpenAI powers the AI answers.
 
 ## <a name="tech-stack">⚙️ Tech Stack</a>
 
-- Zod
-- Next.js
-- NextAuth
-- Open AI
-- MongoDB
-- ShadCN UI
+- Next.js 16 (App Router) + React 19
 - TypeScript
-- TailwindCSS
-- React Hook Form
+- MongoDB + Mongoose
+- NextAuth/Auth.js (Credentials, Google)
+- OpenAI (AI answers)
+- TailwindCSS 4 + shadcn/ui
+- React Hook Form + Zod
+- MDX Editor (@mdxeditor/editor)
+- Pino logger
 
 ## <a name="features">🔋 Features</a>
 
-👉 **Authentication**: Secure sign-in with NextAuth, supporting Email/Password and Google
+👉 **Authentication**: NextAuth with credentials (email/password), Google providers; session-aware UI.
 
-👉 **Home Page**: Displays questions with filters, search, and pagination for easy navigation.
+👉 **Home Feed**: Questions list with search, filters (recent, trending, unanswered, most viewed), and pagination.
 
-👉 **Recommendations**: Personalized suggestions on the home page.
+👉 **Ask & Edit**: MDX editor (light/dark), tag suggestions, server-side validation, and authorization for edits/deletes.
 
-👉 **Complex Layout**: Organized layout with popular questions and tags in view.
+👉 **Question Details**: Rich content, view counter, answer sorting (newest/top), and AI-generated answer helper.
 
-👉 **Question Details**: View questions with rich content, including images and code blocks.
+👉 **Voting & Bookmarks**: Upvote/downvote questions and answers, track interactions, and save items to collections.
 
-👉 **Voting**: Upvote/downvote on questions to highlight helpful content.
+👉 **Tags & Search**: Tag index with usage counts, tag detail pages, and global search across questions/users/tags.
 
-👉 **View Counter**: Tracks the number of views for each question.
+👉 **Community & Profiles**: User directory with filters, plus profile pages showing badges, activity, and saved content.
 
-👉 **Bookmarking**: Save questions for quick access later.
+👉 **Bank Sampah**: Jakarta waste-bank directory with wilayah filters, status, and pagination (hourly revalidation).
 
-👉 **Answer Posting**: MDX editor with light/dark modes for submitting answers.
-
-👉 **AI Answer Generation**: Get AI-generated responses to questions.
-
-👉 **Answer Filtering**: Sort answers by newest or most-voted, with pagination.
-
-👉 **Answer Voting**: Upvote/downvote answers to rank quality responses.
-
-👉 **Collections**: Organized saved questions with filters, search, and pagination.
-
-👉 **Community**: Browse all users with search, filters, and pagination.
-
-👉 **Profile**: View user info, badges, and engagement history with pagination.
-
-👉 **Job Finder**: Discover jobs with filters and search, tailored to the user’s location.
-
-👉 **Tags Page**: List of all tags with question counts, filters, and pagination.
-
-👉 **Tag Details**: View questions by tag with search and pagination.
-
-👉 **Ask a Question**: Simple interface for posting new questions.
-
-👉 **Edit & Delete**: Update or remove questions and answers with validation and authorization.
-
-👉 **Global Search**: Find content across questions, users, tags, and more.
-
-👉 **Responsive Design**: Fully optimized for a seamless experience on desktops, tablets, and mobile devices.
-
-👉 **High Performance**: Fast loading and smooth interactions for an efficient user experience.
-
-and many more, including code architecture and reusability
+👉 **Responsive & Themed**: Light/dark themes, accessible components, and mobile-friendly layouts.
 
 ## <a name="quick-start">🤸 Quick Start</a>
 
@@ -97,7 +68,7 @@ Make sure you have the following installed on your machine:
 **Cloning the Repository**
 
 ```bash
-git clone hhttps://github.com/bluehoneygee/isi-tong-app.git
+git clone https://github.com/bluehoneygee/isi-tong-app.git
 cd isi-tong-app
 ```
 
@@ -121,10 +92,14 @@ MONGODB_URI=
 OPENAI_API_KEY=
 
 # Auth
+AUTH_GITHUB_ID=
+AUTH_GITHUB_SECRET=
 AUTH_GOOGLE_ID=
 AUTH_GOOGLE_SECRET=
 AUTH_SECRET=
 NEXTAUTH_URL=
+# Optional, overrides the default http://localhost:3000/api
+NEXT_PUBLIC_BASE_URL=
 
 ```
 
@@ -137,3 +112,12 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to view the project.
+
+For production, run `npm run build` then `npm start`.
+
+## <a name="environment">🌐 Environment</a>
+
+- Node.js 18+ is recommended (required by Next.js 16).
+- MongoDB connection is mandatory for any data operations.
+- OpenAI API key is required for AI answer generation.
+- External data: the Bank Sampah directory fetches data from the Satu Data Jakarta public API with hourly revalidation.
